@@ -29,11 +29,14 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 		 */
 		//.antMatchers("/delete/**").hasRole("ADMIN")
 		//.antMatchers("/delete/**").hasAuthority("ADMIN")
-			.antMatchers("/delete/**").hasAuthority("ADMIN")
+			//.antMatchers("/delete/**").hasAuthority("ADMIN")
 			.anyRequest().authenticated()
 			.and()
-		.formLogin().and()
-		.httpBasic();
+		.formLogin()
+			.loginPage("/").permitAll()  //The permit all is to make sure everyone has access to the login page,
+										 //Whether they're authenticated or not
+			.loginProcessingUrl("/login")
+			.defaultSuccessUrl("/userList");
 	}
 	
 	

@@ -5,10 +5,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,8 +32,19 @@ public class UserController {
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    
+    @GetMapping("/")
+    public String getLoginPage() {
+        return"loginPage";
+    }
+    
+    /*@PostMapping("/login")
+    public String successFullLogin(@RequestParam("username") String username, 
+    							   @RequestParam("password") String password) {
+    	return "redirect:/userList";
+    }*/
 
-    @RequestMapping
+    @GetMapping("/userList")
     public ModelAndView list() {
         Iterable<User> users = this.userRepository.findAll();
         return new ModelAndView("users/list", "users", users);
@@ -64,7 +78,7 @@ public class UserController {
     @RequestMapping(value = "delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
         this.userRepository.deleteUser(id);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/userList");
     }
 
     @RequestMapping(value = "modify/{id}", method = RequestMethod.GET)
