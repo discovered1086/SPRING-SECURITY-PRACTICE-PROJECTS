@@ -37,6 +37,7 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 										 //Whether they're authenticated or not
 			.loginProcessingUrl("/login")
 			.defaultSuccessUrl("/userList");
+			
 	}
 	
 	

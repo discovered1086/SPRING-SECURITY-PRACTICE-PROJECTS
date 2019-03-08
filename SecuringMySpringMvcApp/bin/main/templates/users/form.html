@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-	layout:decorator="layout">
+	layout:decorate="~{layout}">
 <head>
 <title>Users : Create</title>
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" />
@@ -16,7 +16,7 @@
 					Validation error</p>
 			</div>
 			<div class="pull-right">
-				<a th:href="@{/}" href="users.html"> Users </a>
+				<a th:href="@{/userList}" href="users.html"> Users </a>
 			</div>
 			<input type="hidden" th:field="*{id}"
 				th:class="${#fields.hasErrors('id')} ? 'field-error'" /> <label
