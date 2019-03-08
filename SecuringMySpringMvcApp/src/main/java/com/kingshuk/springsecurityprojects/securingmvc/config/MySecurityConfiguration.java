@@ -36,7 +36,17 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.loginPage("/").permitAll()  //The permit all is to make sure everyone has access to the login page,
 										 //Whether they're authenticated or not
 			.loginProcessingUrl("/login")
-			.defaultSuccessUrl("/userList");
+			.defaultSuccessUrl("/userList")
+			//log out configuration
+			.and()
+			.logout().permitAll().logoutUrl("/logout")
+			.logoutSuccessUrl("/?loggedOut=true").invalidateHttpSession(true)
+			
+			//Will have to know why this is necessary for the successful log out
+			//I believe this is because, we want to be able to handle
+			//logout with a GET request, rather than a post
+			.and()
+			.csrf().disable();
 			
 	}
 	
