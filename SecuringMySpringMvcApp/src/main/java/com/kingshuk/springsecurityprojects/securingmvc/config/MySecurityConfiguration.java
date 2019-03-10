@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -39,7 +40,16 @@ public class MySecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.defaultSuccessUrl("/userList")
 			//log out configuration
 			.and()
-			.logout().permitAll().logoutUrl("/logout")
+			//.logout().permitAll().logoutUrl("/logout")
+			/*
+			 * Replacing the log out URL with something that's more flexible
+			 * 
+			 * Logout is an action that changes the state of the application
+			 * So it's always recommended to use POST instead of GET
+			 * 
+			 * For now we'll use GET for simplicity
+			 */
+			.logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
 			.logoutSuccessUrl("/?loggedOut=true").invalidateHttpSession(true)
 			
 			//Will have to know why this is necessary for the successful log out
